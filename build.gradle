@@ -22,8 +22,20 @@ repositories {
 mainClassName = 'com.github.chm.yyrec.web.APP'
 
 dependencies {
+
+	compile fileTree(dir:'lib', include:'*.jar')
+	
     compile("org.springframework.boot:spring-boot-starter-web:1.5.3.RELEASE")
     compile("org.springframework.boot:spring-boot-starter-websocket:1.5.3.RELEASE")
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.3.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '1.5.3.RELEASE'
+    
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.5.3.RELEASE")
+    
+    testCompile ('org.springframework.boot:spring-boot-starter-test:1.5.3.RELEASE')
+    
+    compile 'org.apache.cxf:cxf-rt-frontend-jaxws:2.3.11'
+	compile 'org.apache.cxf:cxf-rt-transports-http:2.3.11'
+   
+    
 }
