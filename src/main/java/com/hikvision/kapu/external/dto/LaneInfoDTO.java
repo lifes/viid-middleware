@@ -38,6 +38,16 @@ public class LaneInfoDTO {
 	private Calendar updateTime;
 	/** 出入城方向,1表示出城,2表示入城 */
 	private Integer interCityDirection;
+
+	public String getGatCode() {
+		return gatCode;
+	}
+
+	public void setGatCode(String gatCode) {
+		this.gatCode = gatCode;
+	}
+
+	private String gatCode;
 	
 	public Long getId() {
 		return id;
