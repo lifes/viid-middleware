@@ -1,0 +1,24 @@
+--查询是否重复数据
+select  gatcode from bms_crossing_info group by gatcode having count(*)>1;
+--查询是本级是否有gatcode不对的
+select * from bms_crossing_info where (length(gatcode)<20 or gatcode like('00%') or gatcode is null) and cascade_id is null;
+--更新本级别gatcode不对的
+update bms_crossing_info 
+set gatcode = (rpad(controlunit_indexcode,6,'01'))||'0001121'||(lpad(crossing_id,7,'0'))
+where (length(gatcode)<20 or gatcode like('00%') or gatcode is null) and cascade_id is null;
+
+--查询级联上来的数据是否有gatcode不对的
+select * from bms_crossing_info where (length(gatcode)<20 or gatcode like('00%') or gatcode is null) and cascade_id is not null;
+delete from bms_crossing_info  where (length(gatcode)<20 or gatcode like('00%') or gatcode is null) and cascade_id is not null;
+
+--删除重复数据
+delete from bms_crossing_info 
+where gatcode in (select gatcode from bms_crossing_info group by gatcode having count(gatcode)>1) and rowid not
+in (select min(rowid) from bms_crossing_info group by gatcode having count(gatcode)>1);
+
+--
+commit;
+--增加约束
+ALTER TABLE bms_crossing_info ADD CONSTRAINT gatcode_unique_constraint UNIQUE (gatcode);
+
+--更新完成后重起下bms即可
